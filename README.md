@@ -1,1 +1,1 @@
-Meow meow
+A repository for CPP labs in SPbAU
