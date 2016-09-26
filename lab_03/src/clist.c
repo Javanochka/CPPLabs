@@ -9,6 +9,8 @@ void init_list(struct intrusive_list *l) {
   l->head = NULL;
 }
 void add_node(struct intrusive_list *l, struct intrusive_node *node) {
+  node->prev = NULL;
+  node->next = NULL;
   if(l->head == NULL) {
     l->head = node;
     return;

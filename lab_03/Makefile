@@ -12,10 +12,10 @@ bin:
 	mkdir -p bin
 
 bin/main.o: src/main.c include/*.h
-	gcc -c src/main.c -o bin/main.o $(INCLUDES)
+	gcc -c -g src/main.c -o bin/main.o $(INCLUDES)
 
 bin/clist.o: src/clist.c include/*.h
-	gcc -c src/clist.c -o bin/clist.o $(INCLUDES)
+	gcc -c -g src/clist.c -o bin/clist.o $(INCLUDES)
 
 clean:
 	rm -rf bin pose_db
