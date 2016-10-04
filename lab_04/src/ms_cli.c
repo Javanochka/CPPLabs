@@ -5,20 +5,20 @@
 #include "str.h"
 
 int comparInt(const void* a, const void* b) {
-  int* pa = a;
-  int* pb = b;
+  const int* pa = a;
+  const int* pb = b;
   return (*pa - *pb);
 }
 
 int comparChr(const void* a, const void* b) {
-  char* pa = a;
-  char* pb = b;
+  const char* pa = a;
+  const char* pb = b;
   return (*pa - *pb);
 }
 
 int comparStr(const void* a, const void* b) {
-  char** pa = a;
-  char** pb = b;
+  const char* const* pa = a;
+  const char* const* pb = b;
   return strcmp(*pa, *pb);
 }
 
