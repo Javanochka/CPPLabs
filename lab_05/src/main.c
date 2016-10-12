@@ -29,8 +29,8 @@ int make_signed(int x) {
 void loadtext(intrusive_list *lst, FILE * f) {
     while(1) {
         int x, y;
-        fscanf(f, "%d%d", &x, &y);
-        if(feof(f)) break;
+        int res = fscanf(f, "%d%d", &x, &y);
+        if(res != 2) break;
         add_position(lst, x, y);
     }
 }
@@ -39,7 +39,8 @@ int loadint(FILE * f) {
     unsigned char cur;
     int x = 0;
     for(int i = 0; i < 3 && !feof(f); i++) {
-        fread(&cur, sizeof(cur), 1, f);
+        int res = fread(&cur, sizeof(cur), 1, f);
+        if (res != 1) return -1;
         x <<= 8;
         x += cur;
     }
@@ -48,9 +49,11 @@ int loadint(FILE * f) {
 
 void loadbin(intrusive_list *lst, FILE * f) {
     while(1) {
-        int x = make_signed(loadint(f));
-        int y = make_signed(loadint(f));
-        if(feof(f)) break;
+        int x = loadint(f);
+        int y = loadint(f);
+        if(x == -1 || y == -1) break;
+        x = make_signed(x);
+        y = make_signed(y);
         add_position(lst, x, y);
     }
 }
