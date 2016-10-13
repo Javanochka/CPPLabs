@@ -30,6 +30,8 @@ void loadtext(intrusive_list *lst, FILE * f) {
     while(1) {
         int x, y;
         int res = fscanf(f, "%d%d", &x, &y);
+        x = make_signed(x);
+        y = make_signed(y);
         if(res != 2) break;
         add_position(lst, x, y);
     }
@@ -41,8 +43,7 @@ int loadint(FILE * f) {
     for(int i = 0; i < 3 && !feof(f); i++) {
         int res = fread(&cur, sizeof(cur), 1, f);
         if (res != 1) return -1;
-        x <<= 8;
-        x += cur;
+        x += cur << (8*i);
     }
     return x;
 }
@@ -78,9 +79,9 @@ void saveint(FILE * f, int x) {
     unsigned char x1 = (x >> 16) & ((1 << 8)-1);
     unsigned char x2 = (x >> 8) & ((1 << 8)-1);
     unsigned char x3 = (x) & ((1 << 8)-1);
-    fwrite(&x1, sizeof(x1), 1, f);
-    fwrite(&x2, sizeof(x2), 1, f);
     fwrite(&x3, sizeof(x3), 1, f);
+    fwrite(&x2, sizeof(x2), 1, f);
+    fwrite(&x1, sizeof(x1), 1, f);
 }
 
 void savebin(intrusive_list *lst, FILE * f) {
