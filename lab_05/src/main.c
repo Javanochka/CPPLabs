@@ -30,9 +30,9 @@ void loadtext(intrusive_list *lst, FILE * f) {
     while(1) {
         int x, y;
         int res = fscanf(f, "%d%d", &x, &y);
+        if(res != 2) break;
         x = make_signed(x);
         y = make_signed(y);
-        if(res != 2) break;
         add_position(lst, x, y);
     }
 }
