@@ -39,6 +39,7 @@ void loadtext(intrusive_list *lst, FILE * f) {
 
 int loadint(FILE * f) {
     unsigned char cur;
+    if(feof(f)) return -1;
     int x = 0;
     for(int i = 0; i < 3 && !feof(f); i++) {
         int res = fread(&cur, sizeof(cur), 1, f);
