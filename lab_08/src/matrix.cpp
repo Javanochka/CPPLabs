@@ -1,14 +1,13 @@
 #include "matrix.h"
 #include <cstring>
-
+#include <algorithm>
 
 Matrix::Matrix(std::size_t r, std::size_t c) {
   _rows = r;
   _cols = c;
   _data = new int*[r];
   for(std::size_t i = 0; i < r; i++) {
-    _data[i] = new int[c];
-    memset(_data[i], 0, c * sizeof(int));
+    _data[i] = new int[c]();
   }
 }
 
@@ -18,9 +17,7 @@ Matrix::Matrix(const Matrix& m) {
   _data = new int*[_rows];
   for(std::size_t i = 0; i < _rows; i++) {
     _data[i] = new int[_cols];
-    for(std::size_t j = 0; j < _cols; j++) {
-      _data[i][j] = m._data[i][j];
-    }
+    memcpy(_data[i], m._data[i], sizeof(int)*_cols);
   }
 }
 
@@ -57,19 +54,10 @@ void Matrix::print(FILE* f) const {
 
 Matrix& Matrix::operator=(const Matrix& m) {
   if(this == &m) return *this;
-  for(std::size_t i = 0; i < _rows; i++) {
-    delete[] _data[i];
-  }
-  delete[] _data;
-  _rows = m._rows;
-  _cols = m._cols;
-  _data = new int*[_rows];
-  for(std::size_t i = 0; i < _rows; i++) {
-    _data[i] = new int[_cols];
-    for(std::size_t j = 0; j < _cols; j++) {
-      _data[i][j] = m._data[i][j];
-    }
-  }
+  Matrix temp(m);
+  std::swap(this->_cols, temp._cols);
+  std::swap(this->_rows, temp._rows);
+  std::swap(temp._data, this->_data);
   return *this;
 }
 
