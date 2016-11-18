@@ -55,9 +55,9 @@ void Matrix::print(FILE* f) const {
 Matrix& Matrix::operator=(const Matrix& m) {
   if(this == &m) return *this;
   Matrix temp(m);
-  std::swap(this->_cols, temp._cols);
-  std::swap(this->_rows, temp._rows);
-  std::swap(temp._data, this->_data);
+  std::swap(_cols, temp._cols);
+  std::swap(_rows, temp._rows);
+  std::swap(temp._data, _data);
   return *this;
 }
 
