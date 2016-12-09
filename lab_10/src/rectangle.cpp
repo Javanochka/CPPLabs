@@ -1,6 +1,7 @@
 #include "rectangle.h"
 #include <string.h>
 #include <cstdio>
+#include <algorithm>
 
 Rectangle::Rectangle(int id, int x, int y, int width, int height) : Figure(id, x, y) {
   width_ = width;
@@ -14,7 +15,7 @@ void Rectangle::print() const {
 }
 
 bool Rectangle::is_inside(int x, int y) const {
-  return (2*(x-x_) <= width_ && 2*(y-y_) <= height_);
+  return (2*abs(x-x_) <= width_ && 2*abs(y-y_) <= height_);
 }
 
 void Rectangle::zoom(int factor) {
